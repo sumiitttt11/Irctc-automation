@@ -6,6 +6,18 @@ from dotenv import load_dotenv
 from pathlib import Path
 from datetime import datetime
 import traceback
+from flask import Flask
+import threading
+
+app = Flask(__name__)
+
+@app.route("/health")
+def health():
+    return "😼 billa is alive", 200
+
+def run_health_server():
+    app.run(host="0.0.0.0", port=8080)
+
 
 load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -436,6 +448,7 @@ def unknown(message):
 
 if __name__ == "__main__":
     print("😼 Badmosh Billa Online... no cap")
+    threading.Thread(target=run_health_server, daemon=True).start()
 
     while True:
         try:
