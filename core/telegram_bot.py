@@ -10,6 +10,9 @@ from flask import Flask
 import threading
 
 app = Flask(__name__)
+@app.route("/")
+def root():
+    return "😼 billa is alive", 200
 
 @app.route("/health")
 def health():
