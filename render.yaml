@@ -1,5 +1,5 @@
 services:
-  - type: worker          # ← KEY: use worker, not web service
+  - type: web         # ← KEY: use worker, not web service
     name: badmosh-billa
     runtime: python
     buildCommand: pip install -r requirements.txt
