@@ -1,0 +1,11 @@
+{
+    "auto_upgrade": true,
+    "passengers": [
+        {
+            "name": "Sumit satyanarayan kumawat",
+            "age": 21,
+            "gender": "M",
+            "berth_preference": "NO PREFERENCE"
+        }
+    ]
+}

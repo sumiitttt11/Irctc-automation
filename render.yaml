@@ -1,0 +1,11 @@
+services:
+  - type: worker          # ← KEY: use worker, not web service
+    name: badmosh-billa
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python src/bot.py
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false       # you'll enter this manually on Render
+      - key: TELEGRAM_OWNER_ID
+        sync: false

@@ -1,0 +1,17 @@
+{
+    "from_station": "LTT",
+    "to_station": "PNBE",
+    "journey_date": "05/06/2026",
+    "fire_time": "10:00:00",
+    "quota": "TATKAL",
+
+    "trains": [
+        { "number": "15647", "classes": ["3A"] },
+        { "number": "12534", "classes": ["SL", "3A"] }
+    ],
+
+    "payment": {
+        "method": "EWALLET",
+        "saved_upi_id": ""
+    }
+}

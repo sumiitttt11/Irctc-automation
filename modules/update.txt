@@ -1,0 +1,6 @@
+In Passenger Filler
+this line is changed from
+# name_box = await wait_for_element(tab, NAME_INPUT)
+To this 
+row = rows[i]
+name_box = await row.query_selector(NAME_INPUT)
