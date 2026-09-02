@@ -1,68 +1,470 @@
-Harden runtime and artifact isolation as part of correctness
+# 🚆 IRCTC Tatkal Booking Automation System
 
-Across successful Harbor tasks, the stable packaging pattern is:
+<div align="center">
 
-- keep the task under `task/` and declare top-level artifacts;
-- use explicit absolute `/app/...` paths in the agent-visible contract;
-- pin runtime dependencies;
-- keep solution and tests out of the shared image and inspect the built image for leaks;
-- run candidate code unprivileged where possible;
-- use verifier-owned input/output locations and confirm input immutability;
-- run oracle twice at 1.0 and no-op twice at 0.0 with zero exceptions;
-- classify Daytona startup, credentials, canceled runs, and `jobs: []` separately from task quality.
+![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Nodriver](https://img.shields.io/badge/Nodriver-CDP%20Automation-2E8B57?style=for-the-badge)
+![Gemini](https://img.shields.io/badge/Google-Gemini%20API-4285F4?style=for-the-badge&logo=google)
+![Telegram](https://img.shields.io/badge/Telegram-Bot%20API-26A5E4?style=for-the-badge&logo=telegram)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-These controls are not boilerplate. They prevent a task from passing locally while leaking truth, trusting stale artifacts, or failing before the analytical work begins.
+**⚡ High-performance browser automation system for IRCTC Tatkal ticket booking using Python, Nodriver & Google Gemini API.**
 
-My check list:
-1. Read the exact static/QC/AVA/pass result.
-2. Reproduce the supported failure or build the smallest direct witness.
-3. Make the rule agent-visible if the verifier enforces it.
-4. Add the positive and negative/boundary test together.
-5. Rerun the narrow check, then Docker and oracle/no-op calibration.
-6. Push only the coherent slice and inspect the new hosted rollup.
+</div>
 
-contract and threat matrix
+---
 
-- Enumerate inputs, outputs, identity, ordering, precision, error behavior, and side effects.
-- Map every verifier assertion to agent-visible text or a standard explicitly invoked by that text.
-- Add direct positive and negative/equality witnesses for every rule.
+# 📖 Overview
 
-Anti-patterns to reject
+IRCTC Tatkal booking is an extremely time-sensitive process where tickets often sell out within seconds due to high demand.
 
-- Calling local oracle/no-op calibration hosted acceptance.
-- Treating a timeout, crash, canceled job, setup failure, or missing binary as proof of difficulty.
-- Enforcing a verifier rule that the instruction does not disclose.
-- Using only public fixtures or changing only IDs/styles in protected cases.
-- Reusing candidate-produced truth or leaving expected outputs in an agent-readable location.
-- Testing a threshold without equality and adjacent cases.
-- Assuming fixed parity rows, fixed topology layers, fixed category operators, or a fixed output order from public data.
-- Accepting one file from a multi-file transaction when another write failed.
-- Broadening numerical tolerances without a demonstrated hosted artifact and a guard against collapsed output.
-- Adding empty rerun commits or speculative fixes when the actual failure evidence has not been inspected.
+This project automates the complete booking workflow using **Nodriver**, a Chromium DevTools Protocol (CDP) based browser automation framework. The objective is to minimize manual interaction, reduce booking time, and improve booking success during Tatkal reservation windows.
 
-QC failures usually indicate one of four problems:
+The system automatically:
 
-- the verifier enforces a rule that the instruction does not disclose;
-- the verifier misses a plausible bypass;
-- protected cases do not exercise the claimed professional crux;
-- execution/isolation permits stale artifacts, leaked truth, path escape, or candidate influence over expected values.
+- Logs into IRCTC
+- Searches trains
+- Selects the preferred train
+- Loads passenger information from a master list
+- Auto-fills booking details
+- Solves CAPTCHA using Google Gemini API
+- Completes the booking workflow
+- Sends real-time Telegram notifications
 
-Treat `qc_eval`, `qc_exec`, and `qc_gate` separately. The exact workflow may vary, so the job artifact is authoritative.
+---
 
-So the Universal repair loop
+# ✨ Features
 
-Use this sequence for any actionable check failure.
+## 🚄 End-to-End Booking Automation
 
-1. **Pin the failing SHA.** Confirm the comment, artifact, and run belong to the current `headRefOid`.
-2. **Extract one concrete claim.** Rewrite the failure as an observable sentence: “a translated public certificate passes,” “the instruction omits the equality rule,” or “the second output can replace the first without rollback.”
-3. **Reproduce it locally.** Materialize the smallest candidate or fixture that demonstrates the claim.
-4. **Decide whether the rule is disclosed.** If not, update the agent-visible contract before enforcing it.
-5. **Add a witness pair.** Include one valid positive case and one negative, equality, adjacency, or failure-injection case.
-6. **Repair the verifier independently.** Compute truth from protected source data or an independent model, not from candidate-owned summaries.
-7. **Run the narrow regression.** Confirm the reproducer now fails for the intended reason and the positive case passes.
-8. **Run the complete local ladder.** Syntax, TOML, task tests, Docker, semantic mutants, oracle twice, and no-op twice.
-9. **Inspect the diff.** Check for hidden requirements, leaked truth, broad permission changes, unpinned dependencies, generated artifacts, and unrelated rewrites.
-10. **Publish one coherent commit.** The commit should name the behavior repaired, not merely say “retry checks.”
-11. **Verify the new hosted head.** Prior-head success does not transfer to the new SHA.
+Automates the complete booking workflow from login to final confirmation.
 
-If the evidence does not support a source change, stop. A neutral rerun should be used only when explicitly authorized and only for a genuine orchestration or fail-closed parser result.
+### Supported Workflow
+
+- Login to IRCTC
+- Search Trains
+- Select Journey
+- Select Coach Class
+- Choose Quota
+- Auto Fill Passenger Details
+- AI CAPTCHA Recognition
+- Review Booking
+- Payment Navigation
+- Telegram Status Updates
+
+---
+
+## 👥 Master Passenger List
+
+Passenger information is stored inside a centralized configuration file.
+
+The automation automatically fills:
+
+- Passenger Name
+- Age
+- Gender
+- Berth Preference
+- Passenger Type
+- Mobile Number
+
+This removes repetitive manual data entry during Tatkal booking.
+
+---
+
+## 🤖 AI CAPTCHA Recognition
+
+The project integrates **Google Gemini API** to recognize IRCTC CAPTCHA images.
+
+Workflow:
+
+```
+Capture CAPTCHA
+
+↓
+
+Send Image to Gemini API
+
+↓
+
+Receive Prediction
+
+↓
+
+Fill CAPTCHA
+
+↓
+
+Continue Booking
+```
+
+This significantly reduces one of the largest manual bottlenecks during booking.
+
+---
+
+## ⚡ Nodriver Browser Automation
+
+Instead of Selenium, the project uses **Nodriver**, which communicates directly with Chromium using the Chrome DevTools Protocol (CDP).
+
+Advantages include:
+
+- Faster execution
+- Modern asynchronous architecture
+- Reduced browser overhead
+- Better handling of dynamic websites
+- Reliable browser control
+- No WebDriver dependency
+
+---
+
+## 🚉 Optimized for Tatkal Booking
+
+The automation has been optimized specifically for high-demand booking windows.
+
+Optimizations include:
+
+- Preloaded passenger data
+- Cached route information
+- Smart element synchronization
+- Automatic retry mechanism
+- Efficient page navigation
+- Dynamic wait strategies
+- Reduced unnecessary interactions
+
+---
+
+## 📱 Telegram Notifications
+
+Receive real-time updates including:
+
+- Booking Started
+- Train Found
+- Booking Successful
+- Booking Failed
+- Unexpected Errors
+- Runtime Logs
+
+---
+
+## 🛡 Robust Error Handling
+
+The framework gracefully handles:
+
+- Timeout Exceptions
+- Dynamic DOM updates
+- Missing Elements
+- Browser Interruptions
+- Network Delays
+- Unexpected Navigation
+- Retryable Failures
+
+---
+
+# 🏗 System Architecture
+
+```
+                 User Configuration
+                         │
+                         ▼
+                  Config Loader
+                         │
+                         ▼
+               Browser Initialization
+                  (Nodriver/CDP)
+                         │
+                         ▼
+                  Health Check
+                         │
+                         ▼
+                    Login Module
+                         │
+                         ▼
+                  Train Search
+                         │
+                         ▼
+                 Train Selection
+                         │
+                         ▼
+              Passenger Auto Fill
+               (Master Passenger List)
+                         │
+                         ▼
+              Gemini CAPTCHA Solver
+                         │
+                         ▼
+                  Review Booking
+                         │
+                         ▼
+                  Payment Workflow
+                         │
+                         ▼
+             Telegram Notifications
+                         │
+                         ▼
+                     Booking Complete
+```
+
+---
+
+# 🛠 Technology Stack
+
+| Technology | Purpose |
+|------------|---------|
+| Python | Core Development |
+| Nodriver | Browser Automation |
+| Chromium CDP | Browser Communication |
+| Google Gemini API | CAPTCHA Recognition |
+| Telegram Bot API | Notifications |
+| JSON | Configuration Management |
+| Git | Version Control |
+| GitHub | Repository Hosting |
+
+---
+
+# 📂 Project Structure
+
+```
+IRCTC-Tatkal-Automation
+│
+├── config/
+│   ├── passengers.json
+│   ├── routes.json
+│   └── selectors.py
+│
+├── core/
+│   ├── __init__.py
+│   ├── browser.py
+│   ├── config_loader.py
+│   ├── logger.py
+│   ├── http.py
+│   ├── poller.py
+│   ├── profiler.py
+│   ├── retry.py
+│   ├── telegram.py
+│   └── telegram_bot.py
+│
+├── modules/
+│   ├── __init__.py
+│   ├── health_check.py
+│   ├── login.py
+│   ├── passenger_filler.py
+│   ├── payment.py
+│   ├── review_page.py
+│   ├── train_search.py
+│   ├── train_selector.py
+│   └── update.txt
+│
+├── .env.example
+├── requirements.txt
+├── render.yaml
+├── main.py
+└── README.md
+```
+
+---
+
+# ⚙ Configuration
+
+The application uses JSON configuration files to simplify customization.
+
+### passengers.json
+
+Stores reusable passenger profiles.
+
+```json
+{
+  "name": "John Doe",
+  "age": 28,
+  "gender": "Male",
+  "berth": "Lower"
+}
+```
+
+---
+
+### routes.json
+
+Stores frequently used travel routes.
+
+```json
+{
+  "from": "Mumbai Central",
+  "to": "New Delhi",
+  "quota": "Tatkal",
+  "class": "3A"
+}
+```
+
+---
+
+# 🚀 Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/yourusername/IRCTC-Tatkal-Automation.git
+```
+
+Navigate to the project
+
+```bash
+cd IRCTC-Tatkal-Automation
+```
+
+Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+Configure environment variables
+
+```bash
+cp .env.example .env
+```
+
+Update
+
+- Gemini API Key
+- Telegram Bot Token
+- Telegram Chat ID
+
+Run
+
+```bash
+python main.py
+```
+
+---
+
+# 📊 Workflow
+
+```
+Start
+
+↓
+
+Load Configuration
+
+↓
+
+Initialize Browser
+
+↓
+
+Perform Health Check
+
+↓
+
+Login to IRCTC
+
+↓
+
+Search Available Trains
+
+↓
+
+Select Preferred Train
+
+↓
+
+Load Passenger Data
+
+↓
+
+Fill Passenger Information
+
+↓
+
+Capture CAPTCHA
+
+↓
+
+Gemini API Recognition
+
+↓
+
+Fill CAPTCHA
+
+↓
+
+Review Booking
+
+↓
+
+Proceed to Payment
+
+↓
+
+Send Telegram Notification
+
+↓
+
+Finish
+```
+
+---
+
+# 💡 Engineering Highlights
+
+- Modular Architecture
+- Separation of Concerns
+- CDP Browser Automation
+- AI-Assisted CAPTCHA Recognition
+- Master Passenger Management
+- Automatic Retry System
+- Dynamic Polling Utilities
+- Structured Logging
+- Performance Profiling
+- Configuration-Driven Workflow
+- Real-Time Telegram Notifications
+- Fault-Tolerant Execution
+
+---
+
+# 🔮 Roadmap
+
+- Multi-Passenger Booking Queue
+- OCR + Gemini Hybrid CAPTCHA Recognition
+- Web Dashboard
+- Docker Support
+- Cloud Deployment
+- Parallel Booking Sessions
+- HTML Execution Reports
+- Booking Analytics Dashboard
+- Automatic Route Scheduler
+- CI/CD Integration
+
+---
+
+# ⚠ Disclaimer
+
+This project was developed for educational purposes and browser automation research.
+
+It demonstrates browser automation techniques, modular software design, AI-assisted image recognition, and automation engineering concepts.
+
+Users are solely responsible for complying with the IRCTC Terms of Service and all applicable laws and regulations when using or modifying this software.
+
+---
+
+# 👨‍💻 Author
+
+## Sumit Kumawat
+
+**Software Developer • AI • Browser Automation • Full Stack**
+
+🌐 Portfolio  
+https://sumitkumawat.dev
+
+🐙 GitHub  
+https://github.com/sumiitttt11
+
+💼 LinkedIn  
+https://linkedin.com/in/sumiitttt11
+
+---
+
+<div align="center">
+
+⭐ If you found this project interesting, consider giving it a star!
+
+</div>
